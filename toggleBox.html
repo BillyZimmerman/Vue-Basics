@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toggle Box</title>
+  <style>
+      .box {
+        background-color: purple;
+        height: 200px;
+        width: 200px;
+      }
+
+      .box.two {
+        background-color: red;
+      }
+
+      .box.three {
+        background-color: rgb(0, 17, 255);
+      }
+
+      [v-cloak] {
+        display: none;
+      }
+
+      input {
+          margin: 10px;
+          display: block;
+      }
+
+  </style>
+</head>
+<body>
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <!-- USING 'v-cloak' TO HIDE ANY RENDERING ON THE USER SIDE -->
+  <div id="app" v-cloak>
+
+<!-- USING '@click' FOR A CLICK EVENT  -->
+<!-- listening for a clicking event, this will toggle the box to show and disappear -->
+      <button @click ="toggleBox" >Toggle Box</button>
+<!-- USING THE 'v-if' directive - if truthy this will show on the page, if false it will not -->
+<!-- EXACTLY LIKE AN IF/ELSE STATEMENT -->
+      <test-box v-if="isVisible"></test-box>
+      <div v-else-if="isVisible2" class="box two"></div>
+      <div v-else class="box three"></div> 
+  </div>
+  
+  <script>
+     let app = Vue.createApp({
+          data: function() {
+            return {
+              isVisible: false,
+              isVisible2: true,
+            }
+          },
+        // METHODS IS AN OBJECT OF FUNCTIONS
+          methods: {
+              toggleBox:function() {
+                this.isVisible = !this.isVisible
+              },
+          }
+     })
+     app.component('test-box', {
+       template: `
+          <div class="box">
+             <h1> Its Working! </h1>
+          </div>
+      `, 
+          created() {
+              console.log('created')
+          },
+          mounted() {
+            console.log('mounted')
+          },
+          unmounted() {
+            console.log('unmounted')
+          },
+     })
+     app.mount('#app')
+  </script>
+</body>
+</html>
