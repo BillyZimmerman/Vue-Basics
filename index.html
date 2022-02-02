@@ -31,14 +31,19 @@
   <div id="app" v-cloak>
       {{ greeting }}  
 <!-- VUE JS DIRECTIVE - Two way data modeling using the 'v-model'-->
-      <input v-model ="greeting"/>
+<!-- LISTENING FOR A KEYUP ON THE ENTER KEY -->
+      <input @keyup.enter="greet(greeting + '!!!!!')" v-model ="greeting"/>
+
 
       <hr />
+<!-- USING '@click' FOR A CLICK EVENT  -->
+<!-- listening for a clicking event, this will toggle the box to show and disappear -->
+      <button @click ="toggleBox" >Toggle Box</button>
 <!-- USING THE 'v-if' directive - if truthy this will show on the page, if false it will not -->
 <!-- EXACTLY LIKE AN IF/ELSE STATEMENT -->
       <div v-if="isVisible" class="box"></div>
-      <div v-else-if="isVisible2" class="box two"></div>
-      <div v-else class="box three"></div> 
+      <!-- <div v-else-if="isVisible2" class="box two"></div>
+      <div v-else class="box three"></div>  -->
 
   </div>
   
@@ -49,9 +54,20 @@
             return {
               greeting: 'Hello Vue 3!',
               isVisible: false,
-              isVisible2: false
+              // isVisible2: false
             }
+          },
+        // METHODS IS AN OBJECT OF FUNCTIONS
+          methods: {
+              toggleBox() {
+                this.isVisible = !this.isVisible
+              },
+              greet(greeting) {
+                console.log(greeting)
+              }
+
           }
+
      })
      app.mount('#app')
   </script>
